@@ -1,4 +1,3 @@
-from app.schemas.sharex import ApiKeyPydantic
 from fastapi import APIRouter, Request, status
 
 from app.schemas import BaseResponsePydantic
