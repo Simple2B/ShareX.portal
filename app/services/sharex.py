@@ -1,9 +1,9 @@
 from uuid import uuid4
 
-from fastapi import APIRouter, Request, HTTPException, status
+from fastapi import Request, HTTPException, status
 
-from app.schemas import BaseResponsePydantic
 from app.models import User, Content
+from app.logger import log
 
 
 def exception(msg: str):
@@ -15,32 +15,55 @@ def exception(msg: str):
 
 
 async def parse_sharex_request(request: Request):
+    """Parse request data"""
     form = await request.form()
     check_file = form.get("sharex", None)
     api_key = form.get("api_key", None)
-    content_type = form.get("content_type", None)
     testing = form.get("testing", None)
-    if not check_file or not api_key or not content_type:
+    if not check_file or not api_key:
+        log(
+            log.ERROR,
+            "Invalid request data, File[%s], Api Key[%s]",
+            check_file,
+            api_key,
+        )
         raise exception("Could not validate form-data")
+    content_type = check_file.content_type
     data = check_file.file.read()
     filename = f"data/{str(uuid4())}"
     if testing:
         filename = f"tests/temp_data/{str(uuid4())}"
+        content_type = "test"
     with open(filename, "wb") as file:
         file.write(data)
-    user = get_user_by_api(api_key)
-    save_content_to_db(user.id, content_type, filename)
+    user = await get_user_by_api(api_key)
+    await save_content_to_db(user, content_type, filename)
 
 
 async def get_user_by_api(api_key: str) -> User:
-    user = await User.filter(api_key=api_key)
+    """Get user by api_key"""
+    user = await User.filter(api_key=api_key).first()
     if not user:
+        log(
+            log.ERROR,
+            "Wrong credentials, user with api_key: [%s] does not exist",
+            api_key,
+        )
         raise exception("Auth Error! User with that api_key does not exist.")
     return user
 
 
-async def save_content_to_db(user_id: int, content_type: str, filename: str):
+async def save_content_to_db(user: User, content_type: str, filename: str):
+    """Save new content to database"""
     content = await Content.filter(filename=filename)
     if content:
+        log(
+            log.ERROR,
+            "Wrong credentials, content with filename: [%s] already exist",
+            filename,
+        )
         raise exception("Invalid filename, content with such filename already exist")
-    content = Content.create(filename=filename, content_type=content_type, user=user_id)
+    content = await Content.create(
+        filename=filename, content_type=content_type, user=user
+    )
+    return content

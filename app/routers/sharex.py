@@ -11,5 +11,6 @@ router = APIRouter(prefix="/sharex")
     "/", response_model=BaseResponsePydantic, status_code=status.HTTP_201_CREATED
 )
 async def sharex(request: Request):
+    """Upload content to server"""
     await parse_sharex_request(request)
     return {"msg": "Content has been uploaded"}

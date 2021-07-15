@@ -9,4 +9,6 @@ class Content(Model):
     id = fields.IntField(pk=True)
     filename = fields.CharField(max_length=64)
     content_type = fields.CharField(max_length=32)
-    user = fields.ForeignKeyField("models.User", related_name="contents")
+    user = fields.ForeignKeyField(
+        "models.User", related_name="contents", on_delete=fields.CASCADE
+    )
