@@ -20,6 +20,7 @@ asynctest = "^0.13.0"
 python-dotenv = "^0.17.1"
 python-multipart = "^0.0.5"
 asyncpg = "^0.23.0"
+aerich = "^0.5.4"
 
 [tool.poetry.dev-dependencies]
 

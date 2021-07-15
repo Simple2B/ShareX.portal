@@ -9,3 +9,4 @@ class User(Model):
     id = fields.IntField(pk=True)
     username = fields.CharField(max_length=32)
     hash_password = fields.CharField(max_length=128)
+    api_key = fields.CharField(max_length=128)

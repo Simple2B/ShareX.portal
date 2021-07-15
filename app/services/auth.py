@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from uuid import uuid4
 
 from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
@@ -24,6 +25,7 @@ class AuthService:
         user = await UserDB.create(
             username=user_data.username,
             hash_password=self.hash_password(user_data.password),
+            api_key=str(uuid4()),
         )
         log(log.INFO, "User %s has been created", user_data.username)
         return user
