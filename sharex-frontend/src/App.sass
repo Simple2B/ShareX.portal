@@ -1,0 +1,58 @@
+
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+    font-size: 62.5%
+    /* 16px * 62.5 = 10px = 1rem */
+
+body
+    margin: 0
+    height: 100vh
+    font-size: 1.6rem
+    font-family: 'Poppins', sans-serif
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+
+#root
+    height: 100%
+
+.containerApp
+    height: 100%
+    background: no-repeat center/100% 100% url("./img/bg.png")
+    background-size: cover
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    align-items: center
+    .container
+        width: 70%
+        height: 100%
+        margin: 25px auto
+        color: #fff
+        .articleContainer
+            display: flex
+            flex-direction: column
+            justify-content: space-between
+            margin-top: 120px
+            .articleTitle
+                display: flex
+                align-items: center
+                .articleTitleWelcom
+                    font-size: 4.8rem
+                .articleTitleButtom
+                    padding: 5px 20px
+                    border-radius: 47px
+                    border: 1px solid #49047b
+                    background-color: #49047b
+                    -moz-box-shadow: 0px 0px 12px 12px rgba(126,54,207, 0.3)
+                    -webkit-box-shadow: 0px 0px 12px 12px rgba(126,54,207, 0.3)
+                    box-shadow: 0px 0px 12px 12px rgba(126,54,207, 0.3)
+                    font-size: 2.8rem 
+                    margin-left: 20px
+            .articleText
+                padding-top: 5px
+                color: rgba(228, 233, 237, 1)
+                letter-spacing: .2rem
+                font-size: 1.4rem
+
