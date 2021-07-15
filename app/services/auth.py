@@ -6,7 +6,7 @@ from jose import JWTError, jwt
 from passlib.hash import bcrypt
 from pydantic import ValidationError
 
-from app.serializers import User, Token, UserCreate
+from app.schemas import User, Token, UserCreate
 from app.models import User as UserDB
 from app.config import settings as config
 from app.logger import log
