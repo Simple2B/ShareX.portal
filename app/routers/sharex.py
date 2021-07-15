@@ -7,7 +7,10 @@ router = APIRouter(prefix="/sharex")
 
 
 @router.post(
-    "/", response_model=BaseResponsePydantic, status_code=status.HTTP_201_CREATED
+    "/",
+    response_model=BaseResponsePydantic,
+    status_code=status.HTTP_201_CREATED,
+    tags=["ShareX"],
 )
 async def sharex(request: Request):
     """Upload content to server"""
