@@ -23,7 +23,7 @@ def event_loop(client: TestClient) -> Generator:
 
 
 def test_auth(client: TestClient, event_loop: asyncio.AbstractEventLoop):
-    data = {"username": "michael", "password": "secret"}
+    data = {"username": "michaelC", "password": "secret"}
     response = client.post("/auth/sign_up", json=data)
     assert response
     assert response.ok
