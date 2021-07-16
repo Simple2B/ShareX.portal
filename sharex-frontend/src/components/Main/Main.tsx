@@ -14,8 +14,19 @@ const Main = () => {
                             Statistics
                         </div>
                     </div>
-                </form>
 
+                    <div className="fieldContainer">
+                        <div className="field">
+                            <div className="fieldTitle">
+                                <i className="fas fa-file-import" />
+                                <div className="fieldText">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+
+                </form>
             </div>
 
             <div className="manageForm">
