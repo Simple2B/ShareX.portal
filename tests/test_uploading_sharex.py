@@ -11,7 +11,7 @@ from app.models import User, Content
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEST_FILE = BASE_DIR + "/tests/test_data/Code_dPWe4YTTWI.png"
+TEST_FILE = BASE_DIR + "/test_data/Code_dPWe4YTTWI.png"
 
 
 @pytest.fixture()

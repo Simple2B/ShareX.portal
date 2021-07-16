@@ -7,7 +7,7 @@ from app.models import User, Content
 from app.logger import log
 
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.abspath("README.md"))
 
 
 def raise_error(msg: str):
