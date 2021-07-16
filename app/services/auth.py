@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from uuid import uuid4
 
 from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
