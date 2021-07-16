@@ -5,7 +5,7 @@ from pydantic import AnyHttpUrl, BaseSettings, PostgresDsn, validator
 
 class Settings(BaseSettings):
     SERVER_NAME: str = "FastAPI"
-    SERVER_HOST: AnyHttpUrl = None
+    SERVER_HOST: AnyHttpUrl = "http://127.0.0.1:8000"
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = []
 
     JWT_SECRET: str = "secret_key"
@@ -20,11 +20,11 @@ class Settings(BaseSettings):
             return v
         raise ValueError(v)
 
-    POSTGRES_SERVER: str = None
-    POSTGRES_USER: str = None
-    POSTGRES_PASSWORD: str = None
-    POSTGRES_DB: str = None
-    POSTGRES_PORT: str = None
+    POSTGRES_SERVER: str = "127.0.0.1"
+    POSTGRES_USER: str = "postgres"
+    POSTGRES_PASSWORD: str = "secret"
+    POSTGRES_DB: str = "test_db"
+    POSTGRES_PORT: str = 1234
     DATABASE_URI: Optional[PostgresDsn] = None
 
     @validator("DATABASE_URI", pre=True)
