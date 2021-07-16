@@ -11,6 +11,7 @@ class UserCreate(BaseUser):
 
 class User(BaseUser):
     id: int
+    api_key: str
 
     class Config:
         orm_mode = True
