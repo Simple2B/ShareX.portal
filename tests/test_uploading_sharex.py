@@ -1,6 +1,8 @@
-import pytest
 import asyncio
 from typing import Generator
+import os
+
+import pytest
 from fastapi.testclient import TestClient
 from tortoise.contrib.test import finalizer, initializer
 
@@ -8,7 +10,8 @@ from app.setup import create_app
 from app.models import User, Content
 
 
-TEST_FILE = "/home/alik/simple2b/ShareX.portal/tests/test_data/Code_dPWe4YTTWI.png"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEST_FILE = BASE_DIR + "/tests/test_data/Code_dPWe4YTTWI.png"
 
 
 @pytest.fixture()

@@ -1,4 +1,5 @@
 from uuid import uuid4
+import os
 
 from fastapi import Request, HTTPException, status
 
@@ -6,7 +7,10 @@ from app.models import User, Content
 from app.logger import log
 
 
-def exception(msg: str):
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def raise_error(msg: str):
     return HTTPException(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         detail=msg,
@@ -27,12 +31,13 @@ async def parse_sharex_request(request: Request):
             check_file,
             api_key,
         )
-        raise exception("Could not validate form-data")
+        raise raise_error("Could not validate form-data")
     content_type = check_file.content_type
     data = check_file.file.read()
-    filename = f"data/{str(uuid4())}"
+    filename = BASE_DIR + f"/data/{str(uuid4())}"
+    # TODO: Store file on AWS S3
     if testing:
-        filename = f"tests/temp_data/{str(uuid4())}"
+        filename = BASE_DIR + f"/tests/temp_data/{str(uuid4())}"
         content_type = "test"
     with open(filename, "wb") as file:
         file.write(data)
@@ -49,7 +54,7 @@ async def get_user_by_api(api_key: str) -> User:
             "Wrong credentials, user with api_key: [%s] does not exist",
             api_key,
         )
-        raise exception("Auth Error! User with that api_key does not exist.")
+        raise raise_error("Auth Error! User with that api_key does not exist.")
     return user
 
 
@@ -62,7 +67,7 @@ async def save_content_to_db(user: User, content_type: str, filename: str):
             "Wrong credentials, content with filename: [%s] already exist",
             filename,
         )
-        raise exception("Invalid filename, content with such filename already exist")
+        raise raise_error("Invalid filename, content with such filename already exist")
     content = await Content.create(
         filename=filename, content_type=content_type, user=user
     )

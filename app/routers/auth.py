@@ -10,6 +10,7 @@ router = APIRouter(prefix="/auth")
 @router.post("/sign_up", response_model=User, tags=["Auth"])
 async def sign_up(user_data: UserCreate):
     """Register new user"""
+    # TODO only admin could create user
     service = AuthService()
     return await service.register_new_user(user_data)
 
