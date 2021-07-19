@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.7"
 services:
   db:
     image: postgres:12
@@ -11,6 +11,17 @@ services:
     ports:
       - 127.0.0.1:${LOCAL_DB_PORT}:5432
     restart: always
+
+  app:
+    build: .
+    restart: always
+    command: bash ./start_server.sh
+    volumes:
+      - .:/app
+    ports:
+      - 127.0.0.1:8090:80
+    depends_on:
+      - db
 
 volumes:
   db_data:
