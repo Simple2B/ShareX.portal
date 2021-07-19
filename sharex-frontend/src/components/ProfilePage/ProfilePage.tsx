@@ -18,8 +18,13 @@ const ProfilePage = () => {
     const [showImg, setShowImg] = useState(false)
 
     const handleOver = (currentTarget: any) => {
-        console.log("over")
-        setShowImg(true)
+        if (currentTarget) {
+            setShowImg(true)
+        }
+    }
+
+    const handleOut = () => {
+        setShowImg(false)
     }
 
 
@@ -60,10 +65,14 @@ const ProfilePage = () => {
                                     uploadFile.map((file, fileNumber) => (
                                         <div className="uploadFile">
                                             <div className="icons">
-                                                <div className="iconContainer" onMouseOver={handleOver}>
+                                                <div
+                                                    className="iconContainer"
+                                                    onMouseOver={(e) => handleOver(e.currentTarget)}
+                                                    onMouseOut={handleOut}
+                                                >
                                                     <i className="far fa-image">
 
-                                                        <div className={showImg ? "containerHideImg" : "containerShowImg"}>
+                                                        <div className={!showImg ? "containerHideImg" : "containerShowImg"}>
                                                             <img
                                                                 src={file}
                                                                 alt={file.split("/")[file.split("/").length - 1]}
