@@ -11,7 +11,7 @@ const Header = () => {
   });
 
   const isAuth = useTypesSelector((state) => {
-    return state.reducer_login.isAuth;
+    return state.reducer_login.user.length > 0;
   });
 
   const dispatch = useDispatch();
@@ -21,8 +21,8 @@ const Header = () => {
   };
 
   const logout = () => {
+    dispatch(loginActions.logoutAction(""))
     localStorage.removeItem("user")
-    dispatch(loginActions.logoutAction({}))
   }
 
   return (
@@ -36,11 +36,7 @@ const Header = () => {
           {isAuth ? <span>Logout</span> : <span>Login</span>}
         </div>
       </div>
-      {isLogin && (
-        <div className="loginContainer">
-          <Login />
-        </div>
-      )}
+      {isAuth ? null : (isLogin && <div className="loginContainer"><Login /></div>)}
       <nav className="containerNav">
         <div className="containerSettings">
           <div className="containerIcon">

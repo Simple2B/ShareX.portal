@@ -37,10 +37,10 @@ const Login = () => {
       const response = await axios.post('http://sharex.simple2b.net/auth/sign_in', values);
       setRes(response.data)
 
-      if (response.data.access_token) {
-        dispatch(loginActions.authAction(values))
-        localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("user", JSON.stringify(response.data.access_token));
 
+      if (response.data.access_token) {
+        dispatch(loginActions.authAction(response.data.access_token))
       }
     }
     getUser()

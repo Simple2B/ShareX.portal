@@ -1,15 +1,20 @@
 import { ActionTypes } from "../actions/action_types"
 import { ILoginActions } from "../actions/actions_login"
 
+interface LoginReducerState {
+     isLogin: boolean,
+     user: string,
+     isAuth: boolean,
+}
 
-const initialState = {
+const initialState: LoginReducerState = {
      isLogin: false,
-     user: {},
+     user: localStorage.getItem("user") ?? "",
      isAuth: false,
 }
 
 
-export const reducer_login = (state = initialState, action: ILoginActions) => {
+export const reducer_login = (state: LoginReducerState = initialState, action: ILoginActions) => {
      switch (action.type) {
 
           case ActionTypes.OPEN_LOGIN:
@@ -36,7 +41,7 @@ export const reducer_login = (state = initialState, action: ILoginActions) => {
                     ...state,
                     // isLogin: state.isLogin = false,
                     isAuth: state.isAuth = false,
-                    user: {},
+                    user: "",
                }
 
           default:
