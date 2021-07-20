@@ -1,16 +1,30 @@
 import { ActionTypes } from "./action_types";
 
 export interface IOpenLoginAction {
-    type: ActionTypes.OPEN_LOGIN
+    type: ActionTypes.OPEN_LOGIN,
+    isLogin: boolean,
 }
 
 export interface ICloseLoginAction {
-    type: ActionTypes.CLOSE_LOGIN
+    type: ActionTypes.CLOSE_LOGIN,
+    isLogin: boolean,
 }
 
-export type ILoginActions = IOpenLoginAction | ICloseLoginAction
+export interface IAuthAction {
+    type: ActionTypes.AUTH_USER,
+    user: {},
+}
 
-const closeLoginAction = (): ICloseLoginAction => ({ type: ActionTypes.CLOSE_LOGIN })
-const openLoginAction = (): IOpenLoginAction => ({ type: ActionTypes.OPEN_LOGIN })
+export interface ILogoutAction {
+    type: ActionTypes.LOGOUT,
+    user: {},
+}
 
-export default { closeLoginAction, openLoginAction }
+export type ILoginActions = IOpenLoginAction | ICloseLoginAction | IAuthAction | ILogoutAction
+
+const closeLoginAction = (isLogin: boolean): ICloseLoginAction => ({ type: ActionTypes.CLOSE_LOGIN, isLogin: isLogin })
+const openLoginAction = (isLogin: boolean): IOpenLoginAction => ({ type: ActionTypes.OPEN_LOGIN, isLogin: isLogin })
+const authAction = (user: {}): IAuthAction => ({ type: ActionTypes.AUTH_USER, user: user })
+const logoutAction = (user: {}): ILogoutAction => ({ type: ActionTypes.LOGOUT, user: user })
+
+export default { closeLoginAction, openLoginAction, authAction, logoutAction }

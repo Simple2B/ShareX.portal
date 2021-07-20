@@ -1,6 +1,8 @@
 export enum ActionTypes {
     OPEN_LOGIN = "OPEN_LOGIN",
     CLOSE_LOGIN = "CLOSE_LOGIN",
+    AUTH_USER = "AUTH_USER",
+    LOGOUT = "LOGOUT"
 }
 
 export enum ActionTypesProfile {

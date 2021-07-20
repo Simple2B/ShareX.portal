@@ -10,21 +10,30 @@ const Header = () => {
     return state.reducer_login.isLogin;
   });
 
+  const isAuth = useTypesSelector((state) => {
+    return state.reducer_login.isAuth;
+  });
+
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(loginActions.openLoginAction());
+    dispatch(loginActions.openLoginAction(isLogin));
   };
+
+  const logout = () => {
+    localStorage.removeItem("user")
+    dispatch(loginActions.logoutAction({}))
+  }
 
   return (
     <header className="headerContainer">
       <div className="logo">lability.host</div>
-      <div className="containerProfile" onClick={handleClick}>
+      <div className="containerProfile" onClick={isAuth ? logout : handleClick}>
         <div className="profileIcon">
           <i className="fas fa-user-circle" />
         </div>
         <div className="profileText">
-          {isLogin ? <span>Profile</span> : <span>Login</span>}
+          {isAuth ? <span>Logout</span> : <span>Login</span>}
         </div>
       </div>
       {isLogin && (

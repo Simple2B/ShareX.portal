@@ -1,31 +1,31 @@
 import React from "react";
 import "./Inputs_main.sass";
 
-const InputEmail = (props: any) => {
+const InputUserName = (props: any) => {
   return (
     <div className="inputDivForm1">
-      <div className="inputTextDivForm1">E-mail:</div>
+      <div className="inputTextDivForm1">User name:</div>
       <div className="containerInputFieldForm1">
         <input
-          type="email"
+          type="text"
           placeholder=""
-          name="email"
-          value={props.email}
+          name="username"
+          value={props.username}
           onChange={props.handleChange}
           onBlur={props.handleBlur}
           className={
-            props.errors.email && props.touched.email
+            props.errors.username && props.touched.username
               ? "errorsForm1"
               : undefined
           }
         />
 
-        {props.errors.email && props.touched.email && (
-          <div className="inputFeedbackForm1">{props.errors.email}</div>
+        {props.errors.username && props.touched.username && (
+          <div className="inputFeedbackForm1">{props.errors.username}</div>
         )}
       </div>
     </div>
   );
 };
 
-export default InputEmail;
+export default InputUserName;

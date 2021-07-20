@@ -1,20 +1,43 @@
 import { ActionTypes } from "../actions/action_types"
-import {ILoginActions} from "../actions/actions_login"
+import { ILoginActions } from "../actions/actions_login"
 
 
 const initialState = {
-     isLogin: false
+     isLogin: false,
+     user: {},
+     isAuth: false,
 }
 
 
 export const reducer_login = (state = initialState, action: ILoginActions) => {
-     switch(action.type) {
+     switch (action.type) {
 
           case ActionTypes.OPEN_LOGIN:
-               return {isLogin: true}
+               return {
+                    ...state,
+                    isLogin: state.isLogin = true
+               }
 
           case ActionTypes.CLOSE_LOGIN:
-               return { isLogin: false}
+               return {
+                    ...state,
+                    isLogin: state.isLogin = false
+               }
+
+          case ActionTypes.AUTH_USER:
+               return {
+                    ...state,
+                    isLogin: state.isLogin = false,
+                    isAuth: state.isAuth = true,
+                    user: action.user,
+               }
+          case ActionTypes.LOGOUT:
+               return {
+                    ...state,
+                    // isLogin: state.isLogin = false,
+                    isAuth: state.isAuth = false,
+                    user: {},
+               }
 
           default:
                return state

@@ -4,8 +4,16 @@ import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 import { Route } from "react-router-dom";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
+import { useTypesSelector } from "./hooks/useTypeSelector";
 
 const App = () => {
+
+  const isAuth = useTypesSelector((state) => {
+    return state.reducer_login.isAuth;
+  });
+
+  // console.log({ "app": isLogin })
+
   return (
     <>
       <div className="containerApp">
