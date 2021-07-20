@@ -23,25 +23,21 @@ const App = () => {
           <Header />
           {
             isAuth ?
-              <Route exact path="/profile" render={() => <ProfilePage />} />
+              <ProfilePage />
               :
-              <Route exact path="/"
-                render={() => (
-                  <>
-                    <article className="articleContainer">
-                      <div className="articleTitle">
-                        <div className="articleTitleWelcom">Welcome,</div>
-                        <div className="articleTitleButtom">onlepes</div>
-                      </div>
-                      <div className="articleText">
-                        View detailed statistics or quickly <br />
-                        manage often used tasks.
-                      </div>
-                    </article>
-                    <Main />
-                  </>
-                )}
-              />
+              <>
+                <article className="articleContainer">
+                  <div className="articleTitle">
+                    <div className="articleTitleWelcom">Welcome,</div>
+                    <div className="articleTitleButtom">onlepes</div>
+                  </div>
+                  <div className="articleText">
+                    View detailed statistics or quickly <br />
+                    manage often used tasks.
+                  </div>
+                </article>
+                <Main />
+              </>
           }
         </div>
       </div>
