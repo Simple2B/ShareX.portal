@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Login_main.sass";
-import InputEmail from "./Inputs/InputEmail";
+import InputUserName from "./Inputs/InputUserName";
 import InputPassword from "./Inputs/InputPassword";
 // import LinkForgetPassword from "./LinkForgetPassword/LinkForgetPassword";
 // import LoggedCheckbox from "./LoggedCheckbox/LoggedCheckbox";
@@ -10,39 +10,72 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import loginActions from "../../store/actions/actions_login";
+import axios from "axios";
+import { useTypesSelector } from "../../hooks/useTypeSelector";
 
 const Login = () => {
+
+  const isLogin = useTypesSelector((state) => {
+    return state.reducer_login.isLogin;
+  });
+
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(loginActions.closeLoginAction());
+    dispatch(loginActions.closeLoginAction(isLogin));
   };
+
+  const [values, setValues] = useState({})
+  console.log(values)
+
+  const [res, setRes] = useState({})
+
+  // {username: "bob", password: "secret"}
+
+  useEffect(() => {
+    async function getUser() {
+      const response = await axios.post('http://sharex.simple2b.net/auth/sign_in', values);
+      setRes(response.data)
+
+      localStorage.setItem("user", JSON.stringify(response.data.access_token));
+
+      if (response.data.access_token) {
+        dispatch(loginActions.authAction(response.data.access_token))
+      }
+    }
+    getUser()
+  }, [values])
+
+  console.log(res)
 
   return (
     <Formik
-      initialValues={{ email: "", password: "", contentFormCheckbox: false }}
+      initialValues={{ username: "", password: "" }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setSubmitting(true);
         setTimeout((data) => {
           setSubmitting(true);
-          console.log(data);
-          alert(JSON.stringify(values, null, 2));
+          // console.log(data);
+          setValues(values)
+          // alert(JSON.stringify(values, null, 2));
           resetForm();
           setSubmitting(false);
         }, 500);
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string()
+        username: Yup.string()
           // .email()
-          .required("Must enter an email")
-          .matches(
-            /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
-            "Invalid email address"
-          ),
+          .required("Must enter an username")
+        // .matches(
+        //   /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
+        //   "Invalid email address"
+        // )
+        ,
         password: Yup.string()
           .required("Must enter a password")
-          .min(8, "Password should be 8 characters minimum.")
-          .matches(/(?=.*[0-9])/, "Password must contain a number."),
+          .min(6, "Password should be 6 characters minimum.")
+        // .matches(/(?=.*[0-9])/, "Password must contain a number.")
+        ,
       })}
     >
       {(props) => {
@@ -66,8 +99,8 @@ const Login = () => {
               onSubmit={handleSubmit}
             >
               <LogoSide />
-              <InputEmail
-                email={values.email}
+              <InputUserName
+                username={values.username}
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 errors={errors}

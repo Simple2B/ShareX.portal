@@ -4,8 +4,18 @@ import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 import { Route } from "react-router-dom";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
+import { useTypesSelector } from "./hooks/useTypeSelector";
 
 const App = () => {
+
+  // const user = localStorage.getItem("user")
+
+  const isAuth: boolean = useTypesSelector((state) => {
+    return state.reducer_login.user.length > 0;
+  });
+
+  console.log({ "app": isAuth })
+
   return (
     <>
       <div className="containerApp">
@@ -28,7 +38,7 @@ const App = () => {
               </>
             )}
           />
-          <Route exact path="/profile" render={() => <ProfilePage />} />
+          <Route exact path="/profile" render={() => isAuth ? <ProfilePage /> : <div>Error 404</div>} />
         </div>
       </div>
 
