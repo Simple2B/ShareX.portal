@@ -31,7 +31,7 @@ def test_auth(client: TestClient, event_loop: asyncio.AbstractEventLoop):
     assert user
     assert user.username == data["username"]
 
-    response = client.post("/auth/sign_in", data=data)
+    response = client.post("/auth/sign_in", json=data)
     assert response
     assert response.ok
     assert b'{"access_token"' in response.content
