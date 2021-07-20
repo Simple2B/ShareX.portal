@@ -32,9 +32,10 @@ const Login = () => {
 
   // {username: "bob", password: "secret"}
 
+
   useEffect(() => {
     async function getUser() {
-      const response = await axios.post('http://sharex.simple2b.net/auth/sign_in', values);
+      const response = await axios.post(`${window.location.origin}/api/auth/sign_in`, values);
       setRes(response.data)
 
       localStorage.setItem("user", JSON.stringify(response.data.access_token));
