@@ -17,16 +17,14 @@ const ProfilePage = () => {
 
     const [showImg, setShowImg] = useState(false)
 
-    const handleOver = (currentTarget: any) => {
-        if (currentTarget) {
-            setShowImg(true)
+    const showHideImg = (currentTarget: any, file: string) => {
+        console.log(currentTarget)
+        const iconId = document.getElementById(file)
+        console.log(iconId)
+        if (currentTarget && iconId) {
+            setShowImg(!showImg)
         }
     }
-
-    const handleOut = () => {
-        setShowImg(false)
-    }
-
 
     return (
         <article className="profileContainer">
@@ -63,14 +61,16 @@ const ProfilePage = () => {
                             (<>
                                 {
                                     uploadFile.map((file, fileNumber) => (
-                                        <div className="uploadFile">
+                                        <div className="uploadFile" key={fileNumber}>
                                             <div className="icons">
                                                 <div
                                                     className="iconContainer"
-                                                    onMouseOver={(e) => handleOver(e.currentTarget)}
-                                                    onMouseOut={handleOut}
+                                                    onMouseEnter={(e) => {
+                                                        return showHideImg(e.currentTarget, file)
+                                                    }}
+                                                    onMouseLeave={(e) => showHideImg(e.currentTarget, file)}
                                                 >
-                                                    <i className="far fa-image">
+                                                    <i className="far fa-image" id={file}>
 
                                                         <div className={!showImg ? "containerHideImg" : "containerShowImg"}>
                                                             <img
